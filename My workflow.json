@@ -1,0 +1,196 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "gerador-fundo",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -160,
+        -16
+      ],
+      "id": "9d5a26c9-9a36-4802-88b2-b65ad592100d",
+      "name": "Webhook",
+      "webhookId": "c161d81f-fc32-4a3a-b51e-aa540c5a80b4"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        624,
+        -16
+      ],
+      "id": "fa6cb327-94b6-4d0d-8c7c-24f0f162fb28",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.description }}",
+        "options": {
+          "systemMessage": "Gerador de Animações de FUNDO DE PAGINA CSS\nCrie uma animação CSS de FUNDO DE SITE e responda somente com este formato, em json puro\n\n{\n\"code\": \"HTML gerado\",\n\"preview\": \"<div class=\"bg\"></div>\n<div class=\"bg bg2\"></div>\n<div class=\"bg bg3\"></div>\",\n\"style\": \"CSS puro\"\n}\n\nExemplo de fundo animado\n\n{\ncode: \"<div class=\"bg\"></div>\n<div class=\"bg bg2\"></div>\n<div class=\"bg bg3\"></div>\",\n\nstyle:\"html {\n  height:100%;\n}\n\nbody {\n  margin:0;\n}\n\n.bg {\n  animation:slide 3s ease-in-out infinite alternate;\n  background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);\n  bottom:0;\n  left:-50%;\n  opacity:.5;\n  position:fixed;\n  right:-50%;\n  top:0;\n  z-index:-1;\n}\n\n.bg2 {\n  animation-direction:alternate-reverse;\n  animation-duration:4s;\n}\n\n.bg3 {\n  animation-duration:5s;\n}\n\n.content {\n  background-color:rgba(255,255,255,.8);\n  border-radius:.25em;\n  box-shadow:0 0 .25em rgba(0,0,0,.25);\n  box-sizing:border-box;\n  left:50%;\n  padding:10vmin;\n  position:fixed;\n  text-align:center;\n  top:50%;\n  transform:translate(-50%, -50%);\n}\n\nh1 {\n  font-family:monospace;\n}\n\n@keyframes slide {\n  0% {\n    transform:translateX(-25%);\n  }\n  100% {\n    transform:translateX(25%);\n  }\n}\"\n}\n\nREGRAS:\nSem quebras de linha\nUse aspas simples dentro das strings\nAnimações coloridas e impressionantes\nCódigo simples com visual marcante\nse atente pra criar todas os elementos html que você definiu nas classes css e vice versa\nnão retorne nenhuma div ou estilo com loader, ou classe loader\nnão retorne nenhuma propriedade com overflow"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        64,
+        -16
+      ],
+      "id": "4fe14de2-4c6f-42cc-9ee8-bb2b2eae51f3",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        64,
+        240
+      ],
+      "id": "d83f1a7b-a877-414d-a7c0-7f1bf45a0cbd",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "MLIOFh1koQqTnNQm",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst output = $input.first().json.output.replace(\"json\",\"\").replaceAll(\"`\",\"\");\n\nreturn {output};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        -16
+      ],
+      "id": "ff635a5b-e3ce-4048-9a66-5ae539437321",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "gustavopr.app.n8n.cloud",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 OPR/121.0.0.0 (Edition std-1)",
+            "content-length": "21",
+            "accept": "*/*",
+            "accept-encoding": "gzip, br",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7,pt-PT;q=0.6,ja;q=0.5,ru;q=0.4,id;q=0.3,es;q=0.2,ca;q=0.1,th;q=0.1,tr;q=0.1",
+            "cdn-loop": "cloudflare; loops=1; subreqs=1",
+            "cf-connecting-ip": "45.189.90.127",
+            "cf-ew-via": "15",
+            "cf-ipcountry": "BR",
+            "cf-ray": "98a286efb5a836ec-GRU",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-worker": "n8n.cloud",
+            "content-type": "application/json",
+            "origin": "http://127.0.0.1:5500",
+            "priority": "u=1, i",
+            "referer": "http://127.0.0.1:5500/",
+            "sec-ch-ua": "\"Opera GX\";v=\"121\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "45.189.90.127, 172.69.39.161",
+            "x-forwarded-host": "gustavopr.app.n8n.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik-prod-users-gwc-86-76bcc99db7-j4g65",
+            "x-is-trusted": "yes",
+            "x-real-ip": "45.189.90.127"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "description": "gradiente verde claro para vermelho escuro"
+          },
+          "webhookUrl": "https://gustavopr.app.n8n.cloud/webhook-test/gerador-fundo",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "eeef0434-ef5b-4717-a47a-303aa36ef1f3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d0b5714fde5c74c1bd6d68017d45f4296a6635e66e38018b91f5a94ecd5e2f99"
+  },
+  "id": "tuVtL8qhRXdQudt7",
+  "tags": []
+}
